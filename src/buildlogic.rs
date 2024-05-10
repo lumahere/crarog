@@ -1,6 +1,6 @@
 use std::fs::{self, read_dir};
 use std::io::Write;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::process::exit;
 
 use color_print::cprintln;
@@ -74,6 +74,18 @@ fn sync_compile(config:&Config, verbose:bool){
     }
 }
 }
+
+fn link(conf:&Config)
+{
+    let target_files = read_dir("./target/build").unwrap();
+    let mut target_f = vec![];
+    for i in target_files{
+        if let Ok(entr) = i{
+            target_f.push(entr.path());
+        }
+    }
+    let process = std::process::Command::new(&conf.link.exec).args(target_f).arg("-o").arg(format!("./target/{}", conf.project.name)).output().unwrap();
+}
 pub fn build(verbose: bool) {
     cpmcfg_avail!();
     let file = std::fs::read_to_string("cpmcfg.json").unwrap();
@@ -87,6 +99,6 @@ pub fn build(verbose: bool) {
     if config.compile.jobs < 2{
         sync_compile(&config, verbose);
     }
-    
+    link(&config);
     cprintln!("<blue, bold> Building finished!");
 }

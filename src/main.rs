@@ -20,5 +20,6 @@ fn main() {
             self::commands::info();
         }
         cli::CliCmds::Clean => {self::commands::clean()},
+        cli::CliCmds::Run => {self::commands::run(env.verbose)},
     }
 }

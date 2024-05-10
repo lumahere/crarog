@@ -17,6 +17,7 @@ pub enum CliCmds {
     New {
         path: Option<std::path::PathBuf>,
     },
+    Run,
     Build,
     #[command(about="cleans the target directory")]
     Clean,

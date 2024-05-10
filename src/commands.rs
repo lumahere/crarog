@@ -38,6 +38,21 @@ int main(void){
 }
 "#;
 
+pub fn run(verbose:bool){
+    crate::buildlogic::build(verbose);
+    let config = Config::from_str(&std::fs::read_to_string("./cpmcfg.json").unwrap());
+    let output = std::process::Command::new(format!("./target/{}", config.project.name)).output().unwrap();
+    if verbose{
+    cprintln!("<magenta,bold>Forwarding stdout from runnable program");
+    cprintln!("<magenta,bold>Entered program space\n------------------------");
+    }
+
+    cprintln!("<white>{}", String::from_utf8(output.stdout).unwrap());
+    if verbose {
+        cprintln!("<magenta,bold>program exited with status: {};\nstderr: {}", output.status, String::from_utf8(output.stderr).unwrap())
+    }
+}
+
 pub fn clean(){
     cpmcfg_avail!();
     match std::fs::remove_dir_all("./target"){
