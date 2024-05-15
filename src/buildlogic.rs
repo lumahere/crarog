@@ -69,7 +69,7 @@ fn sync_compile(config:&Config, verbose:bool){
     }
     if process.stderr.len() != 0{
         cprintln!("<red, bold>Compile Error at compiling: {}", &i.to_str().unwrap());
-        cprintln!("<red>{}", String::from_utf8(process.stderr).unwrap());
+        cprintln!("<red,bold>{}", String::from_utf8(process.stderr).unwrap_or("unable to parse stderr".to_string()));
         exit(1);
     }
 }
@@ -85,6 +85,9 @@ fn link(conf:&Config)
         }
     }
     let process = std::process::Command::new(&conf.link.exec).args(target_f).arg("-o").arg(format!("./target/{}", conf.project.name)).output().unwrap();
+    if process.stderr.len() != 0 {
+        cprintln!("<red,bold>LINKER ERROR\n{}", String::from_utf8(process.stderr).unwrap_or("unable to parse stderr".to_string()));
+    }
 }
 pub fn build(verbose: bool) {
     cpmcfg_avail!();

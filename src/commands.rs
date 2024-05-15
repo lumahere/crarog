@@ -1,5 +1,5 @@
 use color_print::*;
-use std::io::Write;
+use std::{ io::Write};
 
 
 
@@ -146,5 +146,15 @@ pub fn new(path: Option<std::path::PathBuf>) {
                 Err(_) => (),
             }
         }
+    }
+}
+
+pub fn add(glob:bool){
+    cpmcfg_avail!();
+    let config = Config::from_str(&std::fs::read_to_string("./cpmcfg.json").unwrap());
+    if glob {
+
+    } else {
+        
     }
 }
