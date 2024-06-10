@@ -1,0 +1,23 @@
+{
+  "project": {
+    "name": "thing",
+    "version": "0.0.1"
+  },
+  "dependencies": [
+    "./src/main.c"
+  ],
+  "compile": {
+    "flags": [
+      "-O2",
+      "-Wall"
+    ],
+    "cache": true,
+    "exec": "/bin/gcc",
+    "jobs": 1
+  },
+  "link": {
+    "flags": [],
+    "ltype": "bin",
+    "exec": "/bin/gcc"
+  }
+}

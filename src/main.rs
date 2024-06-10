@@ -21,6 +21,6 @@ fn main() {
         }
         cli::CliCmds::Clean => {self::commands::clean()},
         cli::CliCmds::Run => {self::commands::run(env.verbose)},
-        cli::CliCmds::Add {glob}=> todo!(),
+        cli::CliCmds::Add {glob}=> {self::commands::add(glob)}
     }
 }
